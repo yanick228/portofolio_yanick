@@ -47,11 +47,24 @@ const Navbar = () => {
   ];
 
   const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setIsMobileMenuOpen(false);
-    }
+    // Fermer le menu mobile d'abord
+    setIsMobileMenuOpen(false);
+    
+    // Petit délai pour s'assurer que le menu est fermé avant de scroller
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        // Calculer la position en tenant compte de la hauteur de la navbar
+        const navbarHeight = 80; // Hauteur approximative de la navbar
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - navbarHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
   };
 
   return (
@@ -65,8 +78,8 @@ const Navbar = () => {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -74,20 +87,23 @@ const Navbar = () => {
             className="flex-shrink-0 cursor-pointer"
             onClick={() => scrollToSection('home')}
           >
-            <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
+            <span className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
               Yanick
             </span>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-4 xl:space-x-6 2xl:space-x-8">
             {navItems.map((item) => (
               <motion.button
                 key={item.id}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection(item.id)}
-                className="text-gray-700 dark:text-gray-300 hover:text-primary-400 transition-colors duration-200 font-medium"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(item.id);
+                }}
+                className="text-gray-700 dark:text-gray-300 hover:text-primary-400 transition-colors duration-200 font-medium cursor-pointer"
               >
                 {item.label}
               </motion.button>
@@ -110,11 +126,11 @@ const Navbar = () => {
                 onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary-400 transition-colors duration-200 font-medium"
+                className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 text-gray-700 dark:text-gray-300 hover:text-primary-400 transition-colors duration-200 font-medium text-sm sm:text-base"
                 aria-label="Select language"
               >
-                <span className="text-lg">{currentLanguage.flag}</span>
-                <span className="hidden lg:inline">{currentLanguage.short}</span>
+                <span className="text-base sm:text-lg">{currentLanguage.flag}</span>
+                <span className="hidden xl:inline">{currentLanguage.short}</span>
                 <motion.div
                   animate={{ rotate: isLangMenuOpen ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
@@ -164,8 +180,8 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-2">
+          {/* Mobile/Tablet Menu Button */}
+          <div className="lg:hidden flex items-center gap-1.5 sm:gap-2">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -259,17 +275,22 @@ const Navbar = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white/98 dark:bg-dark-900/98 backdrop-blur-md border-t border-gray-200 dark:border-gray-800"
+            className="lg:hidden bg-white/98 dark:bg-dark-900/98 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 relative z-40"
           >
             <div className="px-4 py-4 space-y-2">
-              {navItems.map((item) => (
+              {navItems.map((item, index) => (
                 <motion.button
                   key={item.id}
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: index * 0.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => scrollToSection(item.id)}
-                  className="w-full text-left text-gray-700 dark:text-gray-300 hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-800 px-4 py-3 rounded-lg transition-colors duration-200 font-medium"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    scrollToSection(item.id);
+                  }}
+                  className="w-full text-left text-gray-700 dark:text-gray-300 hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-800 px-4 py-3 rounded-lg transition-colors duration-200 font-medium cursor-pointer"
                 >
                   {item.label}
                 </motion.button>

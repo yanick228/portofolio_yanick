@@ -1,75 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { HiExternalLink, HiCode } from 'react-icons/hi';
 import { SiReact, SiJavascript, SiNodedotjs, SiMongodb, SiTailwindcss } from 'react-icons/si';
+import { getProjects } from '../services/portfolioService';
 
 const Projects = () => {
   const { t } = useLanguage();
   const [filter, setFilter] = useState('all');
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const projects = [
-    {
-      id: 1,
-      title: 'E-Commerce Platform',
-      description: 'A modern e-commerce platform with shopping cart, payment integration, and admin dashboard.',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800',
-      tags: ['React', 'Node.js', 'MongoDB', 'Tailwind'],
-      demo: '#',
-      code: '#',
-      category: 'fullstack',
-    },
-    {
-      id: 2,
-      title: 'Task Management App',
-      description: 'A collaborative task management application with real-time updates and team collaboration features.',
-      image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800',
-      tags: ['React', 'JavaScript', 'Firebase'],
-      demo: '#',
-      code: '#',
-      category: 'frontend',
-    },
-    {
-      id: 3,
-      title: 'Social Media Dashboard',
-      description: 'Analytics dashboard for social media metrics with interactive charts and data visualization.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800',
-      tags: ['React', 'TypeScript', 'Tailwind'],
-      demo: '#',
-      code: '#',
-      category: 'frontend',
-    },
-    {
-      id: 4,
-      title: 'REST API Backend',
-      description: 'Scalable REST API with authentication, authorization, and comprehensive documentation.',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
-      tags: ['Node.js', 'Express', 'MongoDB'],
-      demo: '#',
-      code: '#',
-      category: 'backend',
-    },
-    {
-      id: 5,
-      title: 'Portfolio Website',
-      description: 'A beautiful and responsive portfolio website showcasing projects and skills.',
-      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800',
-      tags: ['React', 'Tailwind', 'Framer Motion'],
-      demo: '#',
-      code: '#',
-      category: 'frontend',
-    },
-    {
-      id: 6,
-      title: 'Weather App',
-      description: 'Real-time weather application with location-based forecasts and beautiful UI.',
-      image: 'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=800',
-      tags: ['React', 'JavaScript', 'API'],
-      demo: '#',
-      code: '#',
-      category: 'frontend',
-    },
-  ];
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const data = await getProjects();
+        setProjects(data);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+        // Fallback to empty array if error
+        setProjects([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   const filters = [
     { id: 'all', label: t('projects.all') },
@@ -82,6 +38,21 @@ const Projects = () => {
     filter === 'all'
       ? projects
       : projects.filter((project) => project.category === filter);
+
+  if (loading) {
+    return (
+      <section
+        id="projects"
+        className="py-12 sm:py-16 md:py-20 lg:py-32 bg-gray-50 dark:bg-dark-900 relative overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const getIcon = (tag) => {
     const iconMap = {
@@ -125,7 +96,7 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="py-20 md:py-32 bg-gray-50 dark:bg-dark-900 relative overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 lg:py-32 bg-gray-50 dark:bg-dark-900 relative overflow-hidden"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
@@ -138,13 +109,13 @@ const Projects = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
             {t('projects.title')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-lg mb-4">{t('projects.subtitle')}</p>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto rounded-full" />
+          <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-3 sm:mb-4">{t('projects.subtitle')}</p>
+          <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto rounded-full" />
         </motion.div>
 
         {/* Filters */}
@@ -153,7 +124,7 @@ const Projects = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4 mb-12"
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-8 sm:mb-10 md:mb-12"
         >
           {filters.map((filterItem) => (
             <motion.button
@@ -161,7 +132,7 @@ const Projects = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setFilter(filterItem.id)}
-              className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 ${
+              className={`px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg font-medium text-sm sm:text-base transition-all duration-300 ${
                 filter === filterItem.id
                   ? 'bg-gradient-to-r from-primary-500 to-purple-500 text-white'
                   : 'bg-gray-100 dark:bg-dark-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-dark-700'
@@ -180,7 +151,7 @@ const Projects = () => {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8"
           >
             {filteredProjects.map((project) => (
               <motion.div
@@ -191,11 +162,11 @@ const Projects = () => {
                 className="group bg-gray-100 dark:bg-dark-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300"
               >
                 {/* Project Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-40 sm:h-44 md:h-48 overflow-hidden">
                   <motion.img
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.5 }}
-                    src={project.image}
+                    src={project.image_url || 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800'}
                     alt={project.title}
                     className="w-full h-full object-cover"
                   />
@@ -203,24 +174,24 @@ const Projects = () => {
                 </div>
 
                 {/* Project Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-400 transition-colors">
+                <div className="p-4 sm:p-5 md:p-6">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1.5 sm:mb-2 group-hover:text-primary-400 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
+                  <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">
                     {project.description}
                   </p>
 
                   {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                     {project.tags.map((tag, index) => {
                       const Icon = getIcon(tag);
                       return (
                         <span
                           key={index}
-                          className="inline-flex items-center gap-1 px-3 py-1 bg-gray-50 dark:bg-dark-900 rounded-full text-xs text-gray-700 dark:text-gray-300"
+                          className="inline-flex items-center gap-1 px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 bg-gray-50 dark:bg-dark-900 rounded-full text-xs text-gray-700 dark:text-gray-300"
                         >
-                          <Icon className="w-4 h-4" />
+                          <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
                           {tag}
                         </span>
                       );
@@ -228,30 +199,36 @@ const Projects = () => {
                   </div>
 
                   {/* Links */}
-                  <div className="flex gap-4">
-                    <motion.a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors text-sm font-medium"
-                    >
-                      <HiExternalLink className="w-4 h-4" />
-                      {t('projects.viewDemo')}
-                    </motion.a>
-                    <motion.a
-                      href={project.code}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-700 hover:border-primary-500 text-gray-700 dark:text-gray-300 hover:text-primary-400 rounded-lg transition-colors text-sm font-medium"
-                    >
-                      <HiCode className="w-4 h-4" />
-                      {t('projects.viewCode')}
-                    </motion.a>
-                  </div>
+                  {(project.demo_url || project.code_url) && (
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4">
+                      {project.demo_url && (
+                        <motion.a
+                          href={project.demo_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium"
+                        >
+                          <HiExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                          {t('projects.viewDemo')}
+                        </motion.a>
+                      )}
+                      {project.code_url && (
+                        <motion.a
+                          href={project.code_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border border-gray-300 dark:border-gray-700 hover:border-primary-500 text-gray-700 dark:text-gray-300 hover:text-primary-400 rounded-lg transition-colors text-xs sm:text-sm font-medium"
+                        >
+                          <HiCode className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                          {t('projects.viewCode')}
+                        </motion.a>
+                      )}
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}

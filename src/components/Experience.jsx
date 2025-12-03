@@ -1,51 +1,28 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { HiBriefcase } from 'react-icons/hi';
+import { getExperiences } from '../services/portfolioService';
 
 const Experience = () => {
   const { t } = useLanguage();
+  const [experiences, setExperiences] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const experiences = [
-    {
-      id: 1,
-      title: 'Senior Full Stack Developer',
-      company: 'Tech Company Inc.',
-      location: 'Remote',
-      period: '2022 - Present',
-      description: 'Leading development of scalable web applications using React, Node.js, and cloud technologies. Mentoring junior developers and implementing best practices.',
-      achievements: [
-        'Improved application performance by 40%',
-        'Led a team of 5 developers',
-        'Implemented CI/CD pipelines',
-      ],
-    },
-    {
-      id: 2,
-      title: 'Full Stack Developer',
-      company: 'StartupXYZ',
-      location: 'Paris, France',
-      period: '2020 - 2022',
-      description: 'Developed and maintained multiple client projects using modern web technologies. Collaborated with designers and product managers.',
-      achievements: [
-        'Built 10+ production applications',
-        'Reduced load time by 50%',
-        'Implemented automated testing',
-      ],
-    },
-    {
-      id: 3,
-      title: 'Junior Frontend Developer',
-      company: 'Digital Agency',
-      location: 'Lyon, France',
-      period: '2019 - 2020',
-      description: 'Created responsive and interactive user interfaces using React and JavaScript. Worked closely with UX/UI designers.',
-      achievements: [
-        'Developed 15+ websites',
-        'Learned modern frameworks',
-        'Collaborated with cross-functional teams',
-      ],
-    },
-  ];
+  useEffect(() => {
+    const fetchExperiences = async () => {
+      try {
+        const data = await getExperiences();
+        setExperiences(data);
+      } catch (error) {
+        console.error('Error fetching experiences:', error);
+        setExperiences([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchExperiences();
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -68,10 +45,25 @@ const Experience = () => {
     },
   };
 
+  if (loading) {
+    return (
+      <section
+        id="experience"
+        className="py-12 sm:py-16 md:py-20 lg:py-32 bg-gray-100 dark:bg-dark-800 relative overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       id="experience"
-      className="py-20 md:py-32 bg-gray-100 dark:bg-dark-800 relative overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 lg:py-32 bg-gray-100 dark:bg-dark-800 relative overflow-hidden"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
@@ -84,13 +76,13 @@ const Experience = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
             {t('experience.title')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-lg mb-4">{t('experience.subtitle')}</p>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto rounded-full" />
+          <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-3 sm:mb-4">{t('experience.subtitle')}</p>
+          <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto rounded-full" />
         </motion.div>
 
         <motion.div
@@ -101,53 +93,53 @@ const Experience = () => {
           className="relative"
         >
           {/* Timeline line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 via-purple-500 to-primary-500 transform md:-translate-x-1/2" />
+          <div className="absolute left-4 sm:left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 via-purple-500 to-primary-500 transform md:-translate-x-1/2" />
 
-          <div className="space-y-12">
+          <div className="space-y-8 sm:space-y-10 md:space-y-12">
             {experiences.map((experience, index) => (
               <motion.div
                 key={experience.id}
                 variants={itemVariants}
                 className={`relative flex flex-col md:flex-row ${
                   index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                } items-start md:items-center gap-8`}
+                } items-start md:items-center gap-4 sm:gap-6 md:gap-8`}
               >
                 {/* Timeline dot */}
-                <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-primary-500 rounded-full border-4 border-dark-800 z-10" />
+                <div className="absolute left-4 sm:left-6 md:left-1/2 transform md:-translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-primary-500 rounded-full border-2 sm:border-4 border-gray-100 dark:border-dark-800 z-10" />
 
                 {/* Content Card */}
                 <motion.div
                   whileHover={{ scale: 1.02, y: -5 }}
                   className={`w-full md:w-5/12 ${
-                    index % 2 === 0 ? 'md:mr-auto md:pr-12' : 'md:ml-auto md:pl-12'
-                  } bg-gray-50 dark:bg-dark-900/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300`}
+                    index % 2 === 0 ? 'md:mr-auto md:pr-8 lg:pr-12' : 'md:ml-auto md:pl-8 lg:pl-12'
+                  } bg-gray-50 dark:bg-dark-900/50 backdrop-blur-sm rounded-2xl p-4 sm:p-5 md:p-6 border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300 ml-6 sm:ml-8 md:ml-0`}
                 >
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="p-3 bg-primary-500/20 rounded-lg">
-                      <HiBriefcase className="w-6 h-6 text-primary-400" />
+                  <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+                    <div className="p-2 sm:p-3 bg-primary-500/20 rounded-lg flex-shrink-0">
+                      <HiBriefcase className="w-5 h-5 sm:w-6 sm:h-6 text-primary-400" />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1">
                         {experience.title}
                       </h3>
-                      <p className="text-primary-400 font-medium mb-1">
+                      <p className="text-primary-400 font-medium mb-1 text-sm sm:text-base">
                         {experience.company}
                       </p>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+                      <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mb-2">
                         {experience.location} • {experience.period}
                       </p>
                     </div>
                   </div>
 
-                  <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+                  <p className="text-gray-700 dark:text-gray-300 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base">
                     {experience.description}
                   </p>
 
-                  <ul className="space-y-2">
+                  <ul className="space-y-1.5 sm:space-y-2">
                     {experience.achievements.map((achievement, idx) => (
                       <li
                         key={idx}
-                        className="flex items-start gap-2 text-gray-600 dark:text-gray-400 text-sm"
+                        className="flex items-start gap-1.5 sm:gap-2 text-gray-600 dark:text-gray-400 text-xs sm:text-sm"
                       >
                         <span className="text-primary-400 mt-1">▹</span>
                         <span>{achievement}</span>

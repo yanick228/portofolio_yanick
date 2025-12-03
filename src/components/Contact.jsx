@@ -106,7 +106,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="py-20 md:py-32 bg-gray-100 dark:bg-dark-800 relative overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 lg:py-32 bg-gray-100 dark:bg-dark-800 relative overflow-hidden"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
@@ -120,29 +120,29 @@ const Contact = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
             {t('contact.title')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-lg mb-4">{t('contact.subtitle')}</p>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto rounded-full" />
+          <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-3 sm:mb-4">{t('contact.subtitle')}</p>
+          <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto rounded-full" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
           {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-6 sm:space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
                 {t('contact.info')}
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {contactInfo.map((info, index) => (
                   <motion.a
                     key={index}
@@ -152,16 +152,16 @@ const Contact = () => {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                     whileHover={{ scale: 1.05, x: 10 }}
-                    className={`flex items-center gap-4 p-4 bg-gray-50 dark:bg-dark-900/50 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300 ${
+                    className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 dark:bg-dark-900/50 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300 ${
                       info.link ? 'cursor-pointer' : 'cursor-default'
                     }`}
                   >
-                    <div className="p-3 bg-primary-500/20 rounded-lg">
-                      <info.icon className="w-6 h-6 text-primary-400" />
+                    <div className="p-2 sm:p-2.5 md:p-3 bg-primary-500/20 rounded-lg flex-shrink-0">
+                      <info.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary-400" />
                     </div>
-                    <div>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">{info.label}</p>
-                      <p className="text-gray-900 dark:text-white font-medium">{info.value}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">{info.label}</p>
+                      <p className="text-gray-900 dark:text-white font-medium text-sm sm:text-base truncate">{info.value}</p>
                     </div>
                   </motion.a>
                 ))}
@@ -170,10 +170,10 @@ const Contact = () => {
 
             {/* Social Links */}
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
                 {t('contact.social')}
               </h3>
-              <div className="flex gap-4">
+              <div className="flex gap-3 sm:gap-4">
                 {socialLinks.map((social, index) => (
                   <motion.a
                     key={index}
@@ -182,10 +182,10 @@ const Contact = () => {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1, y: -5 }}
                     whileTap={{ scale: 0.95 }}
-                    className="p-4 bg-gray-50 dark:bg-dark-900/50 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300"
+                    className="p-3 sm:p-4 bg-gray-50 dark:bg-dark-900/50 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300"
                     aria-label={social.label}
                   >
-                    <social.icon className="w-6 h-6 text-gray-600 dark:text-gray-400 hover:text-primary-400 transition-colors" />
+                    <social.icon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400 hover:text-primary-400 transition-colors" />
                   </motion.a>
                 ))}
               </div>
@@ -201,13 +201,13 @@ const Contact = () => {
           >
             <form
               onSubmit={handleSubmit}
-              className="bg-gray-50 dark:bg-dark-900/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 dark:border-gray-800"
+              className="bg-gray-50 dark:bg-dark-900/50 backdrop-blur-sm rounded-2xl p-5 sm:p-6 md:p-8 border border-gray-200 dark:border-gray-800"
             >
-              <p className="text-gray-600 dark:text-gray-400 mb-6 text-center">
+              <p className="text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 text-center text-sm sm:text-base">
                 {t('contact.getInTouch')}
               </p>
               
-              <div className="space-y-5">
+              <div className="space-y-4 sm:space-y-5">
                 <div>
                   <label
                     htmlFor="name"
@@ -288,8 +288,8 @@ const Contact = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    rows="6"
-                    className={`w-full px-4 py-3 bg-white dark:bg-dark-800 border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors resize-none ${
+                    rows="5"
+                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white dark:bg-dark-800 border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors resize-none ${
                       errors.message
                         ? 'border-red-500 focus:ring-red-500'
                         : 'border-gray-300 dark:border-gray-700'
@@ -315,7 +315,7 @@ const Contact = () => {
                   disabled={status === 'sending' || status === 'success'}
                   whileHover={status !== 'sending' && status !== 'success' ? { scale: 1.02 } : {}}
                   whileTap={status !== 'sending' && status !== 'success' ? { scale: 0.98 } : {}}
-                  className="w-full px-6 py-4 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full px-5 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {status === 'sending' ? (
                     <>
