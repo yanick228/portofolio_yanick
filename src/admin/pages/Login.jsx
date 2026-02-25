@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
+import { HiEye, HiEyeOff } from 'react-icons/hi';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -87,15 +89,29 @@ const Login = () => {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Mot de passe
             </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-dark-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              placeholder="••••••••"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={6}
+                className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-dark-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors duration-200"
+                aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+              >
+                {showPassword ? (
+                  <HiEyeOff className="w-5 h-5" />
+                ) : (
+                  <HiEye className="w-5 h-5" />
+                )}
+              </button>
+            </div>
           </div>
 
           <button

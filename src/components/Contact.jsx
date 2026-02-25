@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { HiMail, HiPhone, HiLocationMarker, HiCheckCircle } from 'react-icons/hi';
-import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
+import { FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG } from '../config/emailConfig';
 
 const Contact = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -59,7 +62,7 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       setStatus('error');
       return;
@@ -68,39 +71,65 @@ const Contact = () => {
     setStatus('sending');
     setErrors({});
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Préparer les paramètres pour EmailJS
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_name: 'Yanick ASSOGBA',
+      };
+
+      // Envoyer l'email via EmailJS
+      const response = await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        templateParams,
+        EMAILJS_CONFIG.PUBLIC_KEY
+      );
+
+      console.log('✅ Email envoyé avec succès!', response.status, response.text);
+
+      // Succès : réinitialiser le formulaire
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setStatus(null), 5000);
-    }, 1500);
+
+    } catch (error) {
+      console.error('❌ Erreur lors de l\'envoi:', error);
+      setStatus('error');
+
+      // Réinitialiser le statut d'erreur après 5 secondes
+      setTimeout(() => setStatus(null), 5000);
+    }
   };
 
   const contactInfo = [
     {
       icon: HiMail,
       label: t('contact.emailLabel'),
-      value: 'yanick.assogba@example.com',
-      link: 'mailto:yanick.assogba@example.com',
+      value: 'assogbayanick2003@gmail.com',
+      link: 'mailto:assogbayanick2003@gmail.com',
     },
     {
       icon: HiPhone,
       label: t('contact.phoneLabel'),
-      value: '+33 6 12 34 56 78',
-      link: 'tel:+33612345678',
+      value: '+228 99475560',
+      link: 'tel:+22899475560',
     },
     {
       icon: HiLocationMarker,
       label: t('contact.locationLabel'),
-      value: 'Paris, France',
+      value: 'Lomé, Togo',
       link: null,
     },
   ];
 
   const socialLinks = [
-    { icon: FaLinkedin, url: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: FaGithub, url: 'https://github.com', label: 'GitHub' },
-    { icon: FaTwitter, url: 'https://twitter.com', label: 'Twitter' },
+    { icon: FaLinkedin, url: 'https://www.linkedin.com/in/assogba-kossi-yanick-3b00b1294', label: 'LinkedIn' },
+    { icon: FaGithub, url: 'https://github.com/yanick228', label: 'GitHub' },
+    { icon: FaXTwitter, url: 'https://x.com/assogba_ya42559', label: 'X' },
+    { icon: FaInstagram, url: 'https://www.instagram.com/yanick_dev/', label: 'Instagram' },
   ];
 
   return (
@@ -125,7 +154,7 @@ const Contact = () => {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
             {t('contact.title')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-3 sm:mb-4">{t('contact.subtitle')}</p>
+          <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-3 sm:mb-4">N'hésitez pas à me contacter !</p>
           <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto rounded-full" />
         </motion.div>
 
@@ -152,9 +181,7 @@ const Contact = () => {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                     whileHover={{ scale: 1.05, x: 10 }}
-                    className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 dark:bg-dark-900/50 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300 ${
-                      info.link ? 'cursor-pointer' : 'cursor-default'
-                    }`}
+                    className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 dark:bg-dark-900/50 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300 ${info.link ? 'cursor-pointer' : 'cursor-default'}`}
                   >
                     <div className="p-2 sm:p-2.5 md:p-3 bg-primary-500/20 rounded-lg flex-shrink-0">
                       <info.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary-400" />
@@ -206,7 +233,7 @@ const Contact = () => {
               <p className="text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 text-center text-sm sm:text-base">
                 {t('contact.getInTouch')}
               </p>
-              
+
               <div className="space-y-4 sm:space-y-5">
                 <div>
                   <label
@@ -221,11 +248,7 @@ const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 bg-white dark:bg-dark-800 border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors ${
-                      errors.name
-                        ? 'border-red-500 focus:ring-red-500'
-                        : 'border-gray-300 dark:border-gray-700'
-                    }`}
+                    className={`w-full px-4 py-3 bg-white dark:bg-dark-800 border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors ${errors.name ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-gray-700'}`}
                     placeholder={t('contact.namePlaceholder')}
                   />
                   <AnimatePresence>
@@ -255,11 +278,7 @@ const Contact = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 bg-white dark:bg-dark-800 border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors ${
-                      errors.email
-                        ? 'border-red-500 focus:ring-red-500'
-                        : 'border-gray-300 dark:border-gray-700'
-                    }`}
+                    className={`w-full px-4 py-3 bg-white dark:bg-dark-800 border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-gray-700'}`}
                     placeholder={t('contact.emailPlaceholder')}
                   />
                   <AnimatePresence>
@@ -289,11 +308,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows="5"
-                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white dark:bg-dark-800 border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors resize-none ${
-                      errors.message
-                        ? 'border-red-500 focus:ring-red-500'
-                        : 'border-gray-300 dark:border-gray-700'
-                    }`}
+                    className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white dark:bg-dark-800 border rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors resize-none ${errors.message ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-gray-700'}`}
                     placeholder={t('contact.messagePlaceholder')}
                   />
                   <AnimatePresence>
@@ -356,4 +371,3 @@ const Contact = () => {
 };
 
 export default Contact;
-

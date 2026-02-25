@@ -7,8 +7,8 @@ const Footer = () => {
   const { t } = useLanguage();
 
   const socialLinks = [
-    { icon: FaLinkedin, url: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: FaGithub, url: 'https://github.com', label: 'GitHub' },
+    { icon: FaLinkedin, url: 'https://www.linkedin.com/in/assogba-kossi-yanick-3b00b1294', label: 'LinkedIn' },
+    { icon: FaGithub, url: 'https://github.com/yanick228', label: 'GitHub' },
     { icon: FaTwitter, url: 'https://twitter.com', label: 'Twitter' },
     { icon: FaInstagram, url: 'https://instagram.com', label: 'Instagram' },
   ];

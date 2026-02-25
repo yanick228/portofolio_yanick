@@ -9,9 +9,9 @@ const About = () => {
   const [imageError, setImageError] = useState(false);
   const [aboutData, setAboutData] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   // Chemin de l'image "À propos" - placez votre image dans le dossier public
-  const aboutImagePath = '/'; // Vous pouvez utiliser .jpg, .png, .webp, etc.
+  const aboutImagePath = '/about-image.png';
 
   useEffect(() => {
     const fetchAbout = async () => {
@@ -28,24 +28,24 @@ const About = () => {
   }, []);
 
   const stats = [
-    { 
-      icon: HiCode, 
-      value: aboutData ? `${aboutData.experience_years || 0}+` : '3+', 
-      label: t('about.experience') 
+    {
+      icon: HiCode,
+      value: aboutData ? `${aboutData.experience_years || 0}+` : '3+',
+      label: t('about.experience')
     },
-    { 
-      icon: HiCheckCircle, 
-      value: aboutData ? `${aboutData.projects_count || 0}+` : '20+', 
-      label: t('about.projects') 
+    {
+      icon: HiCheckCircle,
+      value: aboutData ? `${aboutData.projects_count || 0}+` : '20+',
+      label: t('about.projects')
     },
-    { 
-      icon: HiLightBulb, 
-      value: aboutData ? `${aboutData.clients_count || 0}+` : '15+', 
-      label: t('about.clients') 
+    {
+      icon: HiLightBulb,
+      value: aboutData ? `${aboutData.clients_count || 0}+` : '15+',
+      label: t('about.clients')
     },
   ];
 
-  const description = aboutData 
+  const description = aboutData
     ? (language === 'fr' ? aboutData.description_fr : aboutData.description_en) || t('about.description')
     : t('about.description');
 
@@ -126,23 +126,23 @@ const About = () => {
                 transition={{ duration: 0.3 }}
                 className="relative rounded-2xl overflow-hidden border-2 border-primary-500/30 shadow-2xl"
               >
-                 <div className="aspect-square relative overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-800">
-                   {!imageError ? (
-                     <img
-                       src={aboutImagePath}
-                       alt="À propos de moi"
-                       className="w-full h-full object-cover"
-                       style={{ objectPosition: '50% 15%' }}
-                       onError={() => setImageError(true)}
-                       loading="lazy"
-                     />
-                   ) : (
-                     <div className="w-full h-full bg-gradient-to-br from-primary-600 to-purple-600 flex items-center justify-center">
-                       <span className="text-6xl font-bold text-white/20">YA</span>
-                     </div>
-                   )}
-                 </div>
-                
+                <div className="aspect-square relative overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-800">
+                  {!imageError ? (
+                    <img
+                      src={aboutImagePath}
+                      alt="À propos de moi"
+                      className="w-full h-full object-cover"
+                      style={{ objectPosition: '50% 15%' }}
+                      onError={() => setImageError(true)}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary-600 to-purple-600 flex items-center justify-center">
+                      <span className="text-6xl font-bold text-white/20">YA</span>
+                    </div>
+                  )}
+                </div>
+
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-purple-500/10 pointer-events-none"></div>
               </motion.div>
