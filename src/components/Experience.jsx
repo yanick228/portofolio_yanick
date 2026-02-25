@@ -65,24 +65,20 @@ const Experience = () => {
       id="experience"
       className="py-12 sm:py-16 md:py-20 lg:py-32 bg-gray-100 dark:bg-dark-800 relative overflow-hidden"
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-primary-500 rounded-full blur-3xl" />
-      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
             {t('experience.title')}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-3 sm:mb-4">{t('experience.subtitle')}</p>
-          <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto rounded-full" />
+          <div className="w-20 sm:w-24 h-1 bg-primary-500 mx-auto rounded-full" />
         </motion.div>
 
         <motion.div
@@ -94,7 +90,7 @@ const Experience = () => {
         >
           {/* Timeline line */}
           {experiences.length > 0 && (
-            <div className="absolute left-4 sm:left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 via-purple-500 to-primary-500 transform md:-translate-x-1/2" />
+            <div className="absolute left-4 sm:left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-800 transform md:-translate-x-1/2" />
           )}
 
           {experiences.length === 0 ? (

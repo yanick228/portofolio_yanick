@@ -49,7 +49,7 @@ const Navbar = () => {
   const scrollToSection = (id) => {
     // Fermer le menu mobile d'abord
     setIsMobileMenuOpen(false);
-    
+
     // Petit délai pour s'assurer que le menu est fermé avant de scroller
     setTimeout(() => {
       const element = document.getElementById(id);
@@ -72,41 +72,36 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? 'bg-white/95 dark:bg-dark-900/95 backdrop-blur-md shadow-lg'
           : 'bg-transparent'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
           {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <div
             className="flex-shrink-0 cursor-pointer"
             onClick={() => scrollToSection('home')}
           >
-            <span className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
+            <span className="text-xl sm:text-2xl md:text-3xl font-bold text-primary-600 dark:text-primary-500">
               Yanick
             </span>
-          </motion.div>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-4 xl:space-x-6 2xl:space-x-8">
             {navItems.map((item) => (
-              <motion.button
+              <button
                 key={item.id}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
                 onClick={(e) => {
                   e.preventDefault();
                   scrollToSection(item.id);
                 }}
-                className="text-gray-700 dark:text-gray-300 hover:text-primary-400 transition-colors duration-200 font-medium cursor-pointer"
+                className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 font-medium cursor-pointer"
               >
                 {item.label}
-              </motion.button>
+              </button>
             ))}
             <motion.button
               whileHover={{ scale: 1.1 }}
@@ -156,11 +151,10 @@ const Navbar = () => {
                           setIsLangMenuOpen(false);
                         }}
                         whileHover={{ backgroundColor: 'rgba(59, 130, 246, 0.1)' }}
-                        className={`relative w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-200 ${
-                          language === lang.code
+                        className={`relative w-full flex items-center gap-3 px-4 py-3 text-left transition-colors duration-200 ${language === lang.code
                             ? 'text-gray-900 dark:text-white'
                             : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
-                        }`}
+                          }`}
                       >
                         <span className="text-xl">{lang.flag}</span>
                         <span className="font-medium">{lang.label}</span>
@@ -230,11 +224,10 @@ const Navbar = () => {
                           setIsLangMenuOpen(false);
                         }}
                         whileHover={{ backgroundColor: 'rgba(59, 130, 246, 0.1)' }}
-                        className={`relative w-full flex items-center gap-2 px-3 py-2.5 text-left text-sm transition-colors duration-200 ${
-                          language === lang.code
+                        className={`relative w-full flex items-center gap-2 px-3 py-2.5 text-left text-sm transition-colors duration-200 ${language === lang.code
                             ? 'text-gray-900 dark:text-white'
                             : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100'
-                        }`}
+                          }`}
                       >
                         <span className="text-lg">{lang.flag}</span>
                         <span className="font-medium">{lang.label}</span>

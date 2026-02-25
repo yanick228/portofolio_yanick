@@ -69,28 +69,28 @@ const Skills = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
             {t('skills.title')}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">{t('skills.subtitle')}</p>
-          <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto rounded-full mt-3 sm:mt-4" />
+          <div className="w-20 sm:w-24 h-1 bg-primary-500 mx-auto rounded-full mt-3 sm:mt-4" />
         </div>
 
         <div className="space-y-8 sm:space-y-10 md:space-y-12">
           {skillCategories.map((category, categoryIndex) => (
             <div
               key={categoryIndex}
-              className="bg-gray-50 dark:bg-dark-900/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-200 dark:border-gray-800"
+              className="bg-white dark:bg-dark-900 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-100 dark:border-gray-800 shadow-sm"
             >
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
-                <span className="w-1 h-6 sm:h-8 bg-gradient-to-b from-primary-500 to-purple-500 rounded-full" />
+                <span className="w-1 h-6 sm:h-8 bg-primary-500 rounded-full" />
                 {category.title}
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
                 {category.skills.map((skill, index) => (
                   <div
                     key={index}
-                    className="group relative bg-gray-100 dark:bg-dark-800/50 rounded-xl p-3 sm:p-4 md:p-6 border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300"
+                    className="group relative bg-gray-50 dark:bg-dark-800 rounded-xl p-3 sm:p-4 md:p-6 border border-gray-100 dark:border-gray-800 transition-all duration-200"
                   >
                     <div className="flex flex-col items-center text-center space-y-2 sm:space-y-3 md:space-y-4">
                       <skill.icon
@@ -105,10 +105,10 @@ const Skills = () => {
                             {skill.level}%
                           </span>
                         </div>
-                        <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-1.5 sm:h-2 overflow-hidden">
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1 sm:h-1.5 overflow-hidden">
                           <div
                             style={{ width: `${skill.level}%` }}
-                            className="h-full bg-gradient-to-r from-primary-500 to-purple-500 rounded-full"
+                            className="h-full bg-primary-500 rounded-full"
                           />
                         </div>
                       </div>

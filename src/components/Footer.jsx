@@ -28,7 +28,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent mb-3 sm:mb-4">
+            <h3 className="text-xl sm:text-2xl font-bold text-primary-600 dark:text-primary-500 mb-3 sm:mb-4">
               Yanick ASSOGBA
             </h3>
             <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">
@@ -76,18 +76,16 @@ const Footer = () => {
             <h4 className="text-gray-900 dark:text-white font-semibold mb-3 sm:mb-4 text-base sm:text-lg">{t('footer.social')}</h4>
             <div className="flex gap-3 sm:gap-4">
               {socialLinks.map((social, index) => (
-                <motion.a
+                <a
                   key={index}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-2.5 sm:p-3 bg-gray-100 dark:bg-dark-800 hover:bg-primary-500/20 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300"
+                  className="p-2.5 sm:p-3 bg-white dark:bg-dark-800 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg border border-gray-100 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-400 hover:text-primary-400 transition-colors" />
-                </motion.a>
+                  <social.icon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-400 hover:text-primary-600 transition-colors" />
+                </a>
               ))}
             </div>
           </motion.div>
@@ -116,18 +114,13 @@ const Footer = () => {
       </div>
 
       {/* Scroll to Top Button */}
-      <motion.button
+      <button
         onClick={scrollToTop}
-        initial={{ opacity: 0, scale: 0 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        whileHover={{ scale: 1.1, y: -5 }}
-        whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 p-3 sm:p-4 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white rounded-full shadow-lg shadow-primary-500/50 transition-all duration-300 z-50"
+        className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 p-3 sm:p-4 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg transition-all duration-300 z-50"
         aria-label="Scroll to top"
       >
         <HiArrowUp className="w-5 h-5 sm:w-6 sm:h-6" />
-      </motion.button>
+      </button>
     </footer>
   );
 };

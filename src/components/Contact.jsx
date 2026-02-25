@@ -137,25 +137,20 @@ const Contact = () => {
       id="contact"
       className="py-12 sm:py-16 md:py-20 lg:py-32 bg-gray-100 dark:bg-dark-800 relative overflow-hidden"
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-primary-500 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full blur-3xl" />
-      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
             {t('contact.title')}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-3 sm:mb-4">N'hésitez pas à me contacter !</p>
-          <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto rounded-full" />
+          <div className="w-20 sm:w-24 h-1 bg-primary-500 mx-auto rounded-full" />
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
@@ -325,12 +320,10 @@ const Contact = () => {
                   </AnimatePresence>
                 </div>
 
-                <motion.button
+                <button
                   type="submit"
                   disabled={status === 'sending' || status === 'success'}
-                  whileHover={status !== 'sending' && status !== 'success' ? { scale: 1.02 } : {}}
-                  whileTap={status !== 'sending' && status !== 'success' ? { scale: 0.98 } : {}}
-                  className="w-full px-5 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full px-5 sm:px-6 py-3 sm:py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {status === 'sending' ? (
                     <>
@@ -345,7 +338,7 @@ const Contact = () => {
                   ) : (
                     t('contact.send')
                   )}
-                </motion.button>
+                </button>
 
                 <AnimatePresence>
                   {status === 'error' && (

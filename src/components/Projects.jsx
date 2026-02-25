@@ -98,47 +98,40 @@ const Projects = () => {
       id="projects"
       className="py-12 sm:py-16 md:py-20 lg:py-32 bg-gray-50 dark:bg-dark-900 relative overflow-hidden"
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500 rounded-full blur-3xl" />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
             {t('projects.title')}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-3 sm:mb-4">{t('projects.subtitle')}</p>
-          <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-primary-500 to-purple-500 mx-auto rounded-full" />
+          <div className="w-20 sm:w-24 h-1 bg-primary-500 mx-auto rounded-full" />
         </motion.div>
 
         {/* Filters */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-8 sm:mb-10 md:mb-12"
         >
           {filters.map((filterItem) => (
-            <motion.button
+            <button
               key={filterItem.id}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
               onClick={() => setFilter(filterItem.id)}
               className={`px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg font-medium text-sm sm:text-base transition-all duration-300 ${filter === filterItem.id
-                ? 'bg-gradient-to-r from-primary-500 to-purple-500 text-white'
-                : 'bg-gray-100 dark:bg-dark-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-dark-700'
+                ? 'bg-primary-600 text-white'
+                : 'bg-white dark:bg-dark-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-100 dark:border-gray-800'
                 }`}
             >
               {filterItem.label}
-            </motion.button>
+            </button>
           ))}
         </motion.div>
 
@@ -174,28 +167,22 @@ const Projects = () => {
               className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8"
             >
               {filteredProjects.map((project) => (
-                <motion.div
+                <div
                   key={project.id}
-                  variants={itemVariants}
-                  layout
-                  whileHover={{ y: -10 }}
-                  className="group bg-gray-100 dark:bg-dark-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300"
+                  className="group bg-white dark:bg-dark-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300 shadow-sm hover:shadow-md"
                 >
                   {/* Project Image */}
                   <div className="relative h-40 sm:h-44 md:h-48 overflow-hidden">
-                    <motion.img
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.5 }}
+                    <img
                       src={project.image_url || 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800'}
                       alt={project.title}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark-900/90 to-transparent" />
                   </div>
 
                   {/* Project Content */}
                   <div className="p-4 sm:p-5 md:p-6">
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1.5 sm:mb-2 group-hover:text-primary-400 transition-colors">
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1.5 sm:mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                       {project.title}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2">
@@ -209,7 +196,7 @@ const Projects = () => {
                         return (
                           <span
                             key={index}
-                            className="inline-flex items-center gap-1 px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 bg-gray-50 dark:bg-dark-900 rounded-full text-xs text-gray-700 dark:text-gray-300"
+                            className="inline-flex items-center gap-1 px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 bg-gray-50 dark:bg-dark-900 rounded-full text-xs text-gray-700 dark:text-gray-300 border border-gray-100 dark:border-gray-800"
                           >
                             <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
                             {tag}
@@ -222,35 +209,31 @@ const Projects = () => {
                     {(project.demo_url || project.code_url) && (
                       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4">
                         {project.demo_url && (
-                          <motion.a
+                          <a
                             href={project.demo_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium"
+                            className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors text-xs sm:text-sm font-medium"
                           >
                             <HiExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                             {t('projects.viewDemo')}
-                          </motion.a>
+                          </a>
                         )}
                         {project.code_url && (
-                          <motion.a
+                          <a
                             href={project.code_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border border-gray-300 dark:border-gray-700 hover:border-primary-500 text-gray-700 dark:text-gray-300 hover:text-primary-400 rounded-lg transition-colors text-xs sm:text-sm font-medium"
+                            className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 border border-gray-200 dark:border-gray-700 hover:border-primary-600 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 rounded-lg transition-colors text-xs sm:text-sm font-medium"
                           >
                             <HiCode className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                             {t('projects.viewCode')}
-                          </motion.a>
+                          </a>
                         )}
                       </div>
                     )}
                   </div>
-                </motion.div>
+                </div>
               ))}
             </motion.div>
           )}
