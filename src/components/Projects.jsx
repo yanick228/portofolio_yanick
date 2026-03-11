@@ -7,7 +7,6 @@ import { getProjects } from '../services/portfolioService';
 
 const Projects = () => {
   const { t } = useLanguage();
-  const [filter, setFilter] = useState('all');
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -18,7 +17,6 @@ const Projects = () => {
         setProjects(data);
       } catch (error) {
         console.error('Error fetching projects:', error);
-        // Fallback to empty array if error
         setProjects([]);
       } finally {
         setLoading(false);
@@ -26,18 +24,6 @@ const Projects = () => {
     };
     fetchProjects();
   }, []);
-
-  const filters = [
-    { id: 'all', label: t('projects.all') },
-    { id: 'frontend', label: 'Frontend' },
-    { id: 'backend', label: 'Backend' },
-    { id: 'fullstack', label: 'Full Stack' },
-  ];
-
-  const filteredProjects =
-    filter === 'all'
-      ? projects
-      : projects.filter((project) => project.category === filter);
 
   if (loading) {
     return (
@@ -64,31 +50,12 @@ const Projects = () => {
     };
     return iconMap[tag] || HiCode;
   };
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: -30,
-      transition: {
-        duration: 0.3,
       },
     },
   };
@@ -113,60 +80,35 @@ const Projects = () => {
           <div className="w-20 sm:w-24 h-1 bg-primary-500 mx-auto rounded-full" />
         </motion.div>
 
-        {/* Filters */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-8 sm:mb-10 md:mb-12"
-        >
-          {filters.map((filterItem) => (
-            <button
-              key={filterItem.id}
-              onClick={() => setFilter(filterItem.id)}
-              className={`px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg font-medium text-sm sm:text-base transition-all duration-300 ${filter === filterItem.id
-                ? 'bg-primary-600 text-white'
-                : 'bg-white dark:bg-dark-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-100 dark:border-gray-800'
-                }`}
-            >
-              {filterItem.label}
-            </button>
-          ))}
-        </motion.div>
-
         {/* Projects Grid */}
         <AnimatePresence mode="wait">
-          {filteredProjects.length === 0 ? (
+          {projects.length === 0 ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-16"
             >
               <div className="max-w-md mx-auto">
-                <div className="w-20 h-20 bg-gray-200 dark:bg-dark-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-20 h-20 bg-gray-200 dark:bg-dark-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-100 dark:border-gray-800 shadow-sm">
                   <HiCode className="w-10 h-10 text-gray-400 dark:text-gray-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                  {filter === 'all' ? 'Aucun projet disponible' : `Aucun projet ${filter} disponible`}
+                  Aucun projet disponible
                 </h3>
                 <p className="text-gray-500 dark:text-gray-400 text-sm">
-                  {filter === 'all'
-                    ? 'Les projets seront affichés ici une fois ajoutés depuis le panneau d\'administration.'
-                    : 'Essayez un autre filtre pour voir d\'autres projets.'}
+                  Les projets seront affichés ici une fois ajoutés depuis le panneau d'administration.
                 </p>
               </div>
             </motion.div>
           ) : (
             <motion.div
-              key={filter}
+              key="projects-grid"
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              exit="hidden"
               className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8"
             >
-              {filteredProjects.map((project) => (
+              {projects.map((project) => (
                 <div
                   key={project.id}
                   className="group bg-white dark:bg-dark-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 hover:border-primary-500/50 transition-all duration-300 shadow-sm hover:shadow-md"

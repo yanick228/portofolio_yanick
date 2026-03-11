@@ -114,8 +114,8 @@ const Contact = () => {
     {
       icon: HiPhone,
       label: t('contact.phoneLabel'),
-      value: '+228 99475560',
-      link: 'tel:+22899475560',
+      value: '+228 99475560 / +228 90528047',
+      link: 'tel:+22899475560, +22890528047',
     },
     {
       icon: HiLocationMarker,
